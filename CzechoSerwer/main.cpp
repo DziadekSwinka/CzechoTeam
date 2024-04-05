@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <windows.h>
 #include <SFML/Network.hpp>
 #include <SFML/Graphics.hpp>
 #include "json.hpp"
@@ -18,7 +20,7 @@ int main()
         std::cerr<<"Nie udalo sie polaczyc"<<std::endl;
         return -1;
     }
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "");
     sf::Text humText,tempText;
     sf::Font arial;
     arial.loadFromFile("ARIAL.TTF");
@@ -28,6 +30,7 @@ int main()
     tempText.setPosition(0,100);
     humText.setFillColor(sf::Color::Black);
     tempText.setFillColor(sf::Color::Black);
+    bool wyslano=false;
     while (window.isOpen())
     {
         sf::Event event;
@@ -40,12 +43,31 @@ int main()
         {
             continue;
         }
-        json parsed_data=json::parse(data);
-        std::string t=parsed_data["temp"];
-        std::string h=parsed_data["hum"];
-        cout<<t<<"\t"<<h<<endl;
-        tempText.setString("Temperatura: "+t);
-        humText.setString("Wilgotnosc: "+h);
+        try{
+            json parsed_data=json::parse(data);
+            std::string t=parsed_data["temp"];
+            std::string h=parsed_data["hum"];
+            std::string lat=parsed_data["lat"];
+            std::string lon=parsed_data["lon"];
+            tempText.setString("Temperatura: "+t);
+            humText.setString("Wilgotnosc: "+h);
+//Wysylamy maila z informacja o alarmie
+            if(stoi(t)>25 && !wyslano)
+            {
+                std::string line="C://Users//Szko³a//Documents//GitHub//CzechoTeam//CzechoSerwer//sending.py "+lon+" "+lat;
+                system(line.c_str());
+                cout<<line<<endl;
+                wyslano=true;
+            }
+        }catch(const json::parse_error& e)
+        {
+            std::cerr<<e.what()<<endl;
+        }
+        cout<<data<<endl;
+
+        //cout<<stoi(t)<<"\t"<<h<<endl;
+
+
 
         window.clear(sf::Color::White);
         window.draw(tempText);
