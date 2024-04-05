@@ -23,11 +23,13 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800, 600), "");
     sf::Text humText,tempText;
     sf::Font arial;
+    sf::RectangleShape rect(sf::Vector2f(800,200));
+    rect.setFillColor(sf::Color::Red);
     arial.loadFromFile("ARIAL.TTF");
     humText.setFont(arial);
     tempText.setFont(arial);
-    humText.setPosition(0,50);
-    tempText.setPosition(0,100);
+    humText.setPosition(100,50);
+    tempText.setPosition(400,50);
     humText.setFillColor(sf::Color::Black);
     tempText.setFillColor(sf::Color::Black);
     bool wyslano=false;
@@ -69,7 +71,8 @@ int main()
 
 
 
-        window.clear(sf::Color::White);
+        window.clear(sf::Color(80,80,80));
+        window.draw(rect);
         window.draw(tempText);
         window.draw(humText);
         window.display();
