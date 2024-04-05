@@ -3,7 +3,7 @@ import time
 import json
 
 port=1313
-ip="172.16.0.186"
+ip="192.168.175.26"
 is_running=True
 
 server_socet=soc.socket(soc.AF_INET,soc.SOCK_DGRAM)

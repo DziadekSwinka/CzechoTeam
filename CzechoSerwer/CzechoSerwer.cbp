@@ -25,13 +25,29 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="sfml-graphics-s" />
+					<Add library="sfml-window-s" />
+					<Add library="sfml-audio-s" />
+					<Add library="sfml-network-s" />
+					<Add library="sfml-system-s" />
+					<Add library="gdi32" />
+					<Add library="winmm" />
+					<Add library="freetype" />
+					<Add library="opengl32" />
+					<Add library="openal32" />
+					<Add library="ws2_32" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add option="-DSFML_STATIC" />
+			<Add directory="C:/Users/Szkoła/Documents/SFML-2.6.1/include" />
 		</Compiler>
+		<Linker>
+			<Add directory="C:/Users/Szkoła/Documents/SFML-2.6.1/lib" />
+		</Linker>
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
